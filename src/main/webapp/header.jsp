@@ -169,8 +169,28 @@
                     $("#login_sendSmsCode").click(function () {
                         let telephoneVal = $("#login_sendSmsCode").val();
                         let url = "${pageContext.request.contextPath}/user";
-                        let data = {'telephone':telephoneVal,'action':''};
+                        let data = {'telephone':telephoneVal,'action':'loginSendSms'};
+                        $.post(url,data,function (resultInfo){
+                            if(resultInfo.flag){
+                                $("#loginErrorMsg").html(resultInfo.successMsg);
+                            }else {
+                                $("#loginErrorMsg").html(resultInfo.errorMsg);
+                            }
+                        },"json")
                     })
+                })
+            </script>
+            <script>
+                $("#telLogin").click(function (){
+                    let data = $("#telLoginForm").serialize();
+                    let url = "${pageContext.request.contextPath}/user";
+                    $.post(url,data,function (resultInfo){
+                        if(resultInfo.flag){
+                            location.reload();
+                        }else {
+                            $("#loginErrorMsg").html(resultInfo.errorMsg);
+                        }
+                    },"json")
                 })
             </script>
         </div>

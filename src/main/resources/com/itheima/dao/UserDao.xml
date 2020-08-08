@@ -38,4 +38,8 @@
     <select id="pwdLogin" resultType="user">
         select * from tab_user where username = #{username} and password=#{password}
     </select>
+
+    <select id="telLogin" parameterType="string" resultType="user">
+        select username from tab_user where telephone=#{telephone}
+    </select>
 </mapper>

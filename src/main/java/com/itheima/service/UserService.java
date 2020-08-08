@@ -13,4 +13,6 @@ public interface UserService {
     boolean checkName(String username);
 
     User pwdLogin(String username, String password);
+
+    User phoneLogin(String telephone);
 }

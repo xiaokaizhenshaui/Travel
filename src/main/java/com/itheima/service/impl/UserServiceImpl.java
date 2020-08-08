@@ -12,6 +12,10 @@ import org.apache.ibatis.session.SqlSession;
  * service的实现类
  */
 public class UserServiceImpl implements UserService {
+    /**
+     * 注册
+     * @param user
+     */
     @Override
     public void register(User user) {
         //获得连接 并操作
@@ -63,6 +67,12 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    /**
+     * 用户名密码登录
+     * @param username
+     * @param password
+     * @return
+     */
     @Override
     public User pwdLogin(String username, String password) {
         //获得连接 并操作
@@ -71,6 +81,27 @@ public class UserServiceImpl implements UserService {
         try {
             String passWord = Md5Utils.encodeByMd5(password);
             return userDao.pwdLogin(username,passWord);
+        }catch (Exception e){
+            e.printStackTrace();//处理异常的地方
+        }finally {
+            MyBatisUtils.close(sqlSession);//释放资源
+        }
+        return null;
+    }
+
+    /**
+     * 手机号码登陆
+     * @param telephone
+     * @return
+     */
+    @Override
+    public User phoneLogin(String telephone) {
+        //获得连接 并操作
+        SqlSession sqlSession = MyBatisUtils.openSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        try {
+            return userDao.telLogin(telephone);
+
         }catch (Exception e){
             e.printStackTrace();//处理异常的地方
         }finally {

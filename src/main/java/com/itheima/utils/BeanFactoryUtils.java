@@ -17,7 +17,7 @@ public class BeanFactoryUtils {
     public static Object getBean(String key){
         Object o = null;
         try {
-            InputStream is = UserServlet.class.getClassLoader().getResourceAsStream("beans.properties");
+            InputStream is = BeanFactoryUtils.class.getClassLoader().getResourceAsStream("beans.properties");
             Properties properties = new Properties();
             properties.load(is);
             String className = properties.getProperty(key);

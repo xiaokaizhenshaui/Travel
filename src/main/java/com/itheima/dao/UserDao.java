@@ -16,4 +16,6 @@ public interface UserDao {
     int findExistsUserName(String username);
 
     User pwdLogin(@Param("username") String username, @Param("password") String passWord);
+
+    User telLogin(String telephone);
 }

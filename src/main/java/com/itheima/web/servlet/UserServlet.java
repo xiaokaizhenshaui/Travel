@@ -52,6 +52,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
+     * register code
      * 1.telephone
      * 2.code
      * 3.存入session
@@ -109,6 +110,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
+     * 手机密码登录
      * 1.获取数据
      * 2.调用service执行登录
      * 3.返回结果 true | false
@@ -119,8 +121,8 @@ public class UserServlet extends BaseServlet {
     private void pwdLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        UserService userService = (UserService)getBean("userservice");
-//        UserService userService = new UserServiceImpl();
+//        UserService userService = (UserService)getBean("userservice");
+        UserService userService = new UserServiceImpl();
         User user = userService.pwdLogin(username, password);
         ResultInfo resultInfo = null;
         if(user == null){
@@ -149,19 +151,39 @@ public class UserServlet extends BaseServlet {
      * telephone login
      * 1.获取浏览器数据
      * 2.处理数据
+     * true --> 判断user是否存在
+     * false -->
      * 3.响应结果
+     *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
     protected void telLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResultInfo resultInfo = null;
         String telephone = request.getParameter("telephone");
-        request.getParameter("");
+        String smsCode = request.getParameter("smsCode");
+        String loginCode = (String) request.getSession().getAttribute("loginCode");
+        if(StringUtils.equals(smsCode,loginCode)){
+//            UserService userService = (UserService) getBean("userservice");
+            UserService userService = new UserServiceImpl();
+            User user = userService.phoneLogin(telephone);
+            if(user == null){
+                resultInfo = new ResultInfo(false,"","Please register .");
+            }else {
+                resultInfo = new ResultInfo(true,"Login ...","");
+                request.getSession().setAttribute("loginUser",user);
+            }
+        }else {
+            resultInfo = new ResultInfo(false,"","SMSCODE WRONG .");
+        }
+        String json = new ObjectMapper().writeValueAsString(resultInfo);
+        response.getWriter().print(json);
     }
 
     /**
-     * 收益登录验证码
+     * 手机登录验证码
      * 1.获得phone号
      * 2.发送手机号
      * 3.将发送的验证码保存
@@ -173,26 +195,28 @@ public class UserServlet extends BaseServlet {
      */
     protected void loginSendSms(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ResultInfo resultInfo;
-        String telephone = request.getParameter("telephone");
-        String code = SmsUtil.createCode();
-        request.getSession().setAttribute("loginCode",code);
-        resultInfo = new ResultInfo(true, "MESSAGE SEND SUCCESS .","");
-
+        try {
+            String telephone = request.getParameter("telephone");
+            String code = SmsUtil.createCode();//假设需要传入电话
+            System.out.printf(code);
+            request.getSession().setAttribute("loginCode",code);
+            resultInfo = new ResultInfo(true, "MESSAGE SEND SUCCESS .","");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultInfo = new ResultInfo(false, "","MESSAGE SEND FAIL.");
+        }
+        String json = new ObjectMapper().writeValueAsString(resultInfo);
+        response.getWriter().print(json);
     }
 
-    private void find(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("查");//*100
-    }
+    /**
+     * 修改个人信息
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void changeUserInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("改");//*100
-    }
-
-    private void delete(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("删");//*100
-    }
-
-    private void save(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("增"); //*100
     }
 }

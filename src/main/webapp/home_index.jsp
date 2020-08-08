@@ -28,8 +28,12 @@
                             <li class="active"><a href="#one" data-toggle="tab">基本资料</a></li>
                             <li><a href="#two" data-toggle="tab">头像照片</a></li>
                         </ul>
-                        <%--注意multipart/from-date会禁止request的行为--%>
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <%--注意multipart/from-date会禁止request的行为,需要在servlet中加上注解--%>
+                        <form action="${pageContext.request.contextPath}/user" method="post" enctype="multipart/form-data">
+                            <%--当前页面存入id--%>
+                            <input type="hidden" name="uid" value="${loginUser.uid}">
+                            <%--执行后台的方法名称--%>
+                            <input type="hidden" name="action" value="updateUser">
                             <div class="tab-content ">
                                 <div id="one" class="tab-pane active">
                                     <div class="sui-form form-horizontal">
@@ -83,7 +87,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -93,6 +96,10 @@
 </div>
 <!--引入尾部-->
 <%@include file="footer.jsp"%>
+<script>
+    $(function (){
 
+    })
+</script>
 </body>
 </html>
