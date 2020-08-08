@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.UserDao">
+    <!--
+        //查询所有
+    List<User> findAll();
+    -->
+  <select id="findAll" resultType="user">
+     select * from tab_user
+  </select>
+
+    <!--
+        //保存user对象
+    void save(User user);
+    insert into 表名(字段1,字段2,字段3) values(值1,值2,值3)
+    -->
+    <insert id="save" parameterType="user">
+      insert into tab_user
+      (
+        uid,username,password,telephone,nickname,sex,birthday,email,pic
+      )
+      values
+      (
+       #{uid},#{username},#{password},#{telephone},#{nickname},#{sex},#{birthday},#{email},#{pic}
+      )
+    </insert>
+
+    <!--
+    //判断用户名是否存在
+    int findExistsUserName(String username);
+    -->
+    <select id="findExistsUserName" parameterType="string" resultType="int">
+        select count(*) from tab_user where username=#{username}
+    </select>
+
+    <select id="pwdLogin" resultType="user">
+        select * from tab_user where username = #{username} and password=#{password}
+    </select>
+</mapper>
