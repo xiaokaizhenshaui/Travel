@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
     /**
      * 校验用户名
      * @param username
-     * @return
      */
     @Override
     public boolean checkName(String username) {
@@ -102,6 +101,44 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.telLogin(telephone);
 
+        }catch (Exception e){
+            e.printStackTrace();//处理异常的地方
+        }finally {
+            MyBatisUtils.close(sqlSession);//释放资源
+        }
+        return null;
+    }
+
+    /**
+     * 更新数据
+     * @param user
+     */
+    @Override
+    public void updateUser(User user) {
+        //获得连接 并操作
+        SqlSession sqlSession = MyBatisUtils.openSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        try {
+            userDao.updateUser(user);
+        }catch (Exception e){
+            e.printStackTrace();//处理异常的地方
+        }finally {
+            MyBatisUtils.close(sqlSession);//释放资源
+        }
+    }
+
+    /**
+     * select user
+     * @param uid
+     * @return
+     */
+    @Override
+    public User findById(int uid) {
+        //获得连接 并操作
+        SqlSession sqlSession = MyBatisUtils.openSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        try {
+            return userDao.findById(uid);
         }catch (Exception e){
             e.printStackTrace();//处理异常的地方
         }finally {

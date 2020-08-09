@@ -33,35 +33,34 @@
                             <%--当前页面存入id--%>
                             <input type="hidden" name="uid" value="${loginUser.uid}">
                             <%--执行后台的方法名称--%>
-                            <input type="hidden" name="action" value="updateUser">
+                            <input type="hidden" name="action" value="UpdateInfo">
                             <div class="tab-content ">
                                 <div id="one" class="tab-pane active">
                                     <div class="sui-form form-horizontal">
                                         <div class="control-group">
                                             <label for="inputName" class="control-label">昵称：</label>
                                             <div class="controls">
-                                                <input type="text" id="inputName" name="nickname" placeholder="昵称">
+                                                <input type="text" id="inputName" name="nickname" placeholder="昵称" value="${loginUser.nickname}">
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">性别：</label>
                                             <div class="controls">
-
-                                                <input type="radio" name="sex" value="1" ${user.sex==1?"checked":0}><b>男</b>
+                                                <input type="radio" name="sex" value="1" ${user.sex==1?"checked":''}><b>男</b>
                                                 &nbsp;&nbsp;
-                                                <input type="radio" name="sex" value="0" ${user.sex==0?"checked":0}><b>女</b>
+                                                <input type="radio" name="sex" value="0" ${user.sex==0?"checked":''}><b>女</b>
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">生日：</label>
                                             <div class="controls">
-                                                <input type="text" name="birthday" placeholder="生日">
+                                                <input type="text" name="birthday" placeholder="生日" value="${loginUser.birthday}">
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">邮箱：</label>
                                             <div class="controls">
-                                                <input type="text" name="email" placeholder="邮箱">
+                                                <input type="text" name="email" placeholder="邮箱" value="${loginUser.email}">
                                             </div>
                                         </div>
                                         <div class="control-group">

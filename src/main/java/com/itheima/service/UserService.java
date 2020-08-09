@@ -15,4 +15,8 @@ public interface UserService {
     User pwdLogin(String username, String password);
 
     User phoneLogin(String telephone);
+
+    void updateUser(User user);
+
+    User findById(int uid);
 }

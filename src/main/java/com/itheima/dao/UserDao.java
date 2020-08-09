@@ -18,4 +18,8 @@ public interface UserDao {
     User pwdLogin(@Param("username") String username, @Param("password") String passWord);
 
     User telLogin(String telephone);
+
+    void updateUser(User user);
+
+    User findById(int uid);
 }

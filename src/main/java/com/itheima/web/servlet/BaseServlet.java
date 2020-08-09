@@ -20,7 +20,7 @@ public class BaseServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*String action = request.getParameter("action");
+        String action = request.getParameter("action");
         //拿到本类的class
         //根据方法名获得method对象，获得private或者protected修饰的方法
         //暴力反射代码
@@ -32,8 +32,8 @@ public class BaseServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("获取方法失败");
-        }*/
-        try {
+        }
+        /*try {
             //方法名称
             String action = request.getParameter("action");
 
@@ -54,6 +54,6 @@ public class BaseServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
